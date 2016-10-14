@@ -1,21 +1,23 @@
-var gulp           = require('gulp'),
-		gutil          = require('gulp-util' ),
-		sass           = require('gulp-sass'),
-		browserSync    = require('browser-sync'),
-		concat         = require('gulp-concat'),
-		uglify         = require('gulp-uglify'),
-		cleanCSS       = require('gulp-clean-css'),
-		rename         = require('gulp-rename'),
-		del            = require('del'),
-		imagemin       = require('gulp-imagemin'),
-		pngquant       = require('imagemin-pngquant'),
-		cache          = require('gulp-cache'),
-		autoprefixer   = require('gulp-autoprefixer'),
-		fileinclude    = require('gulp-file-include'),
-		gulpRemoveHtml = require('gulp-remove-html'),
-		bourbon        = require('node-bourbon'),
-		ftp            = require('vinyl-ftp'),
-		notify         = require("gulp-notify");
+var gulp			= require('gulp'),
+	gutil          	= require('gulp-util' ),
+	sass           	= require('gulp-sass'),
+	browserSync    	= require('browser-sync'),
+	concat         	= require('gulp-concat'),
+	uglify         	= require('gulp-uglify'),
+	cleanCSS       	= require('gulp-clean-css'),
+	rename         	= require('gulp-rename'),
+	del            	= require('del'),
+	htmlmin 		= require('gulp-htmlmin'),
+	imagemin       	= require('gulp-imagemin'),
+	pngquant       	= require('imagemin-pngquant'),
+	cache          	= require('gulp-cache'),
+	autoprefixer   	= require('gulp-autoprefixer'),
+	fileinclude    	= require('gulp-file-include'),
+	gulpRemoveHtml 	= require('gulp-remove-html'),
+	removeHtmlComments = require('gulp-remove-html-comments'),
+	bourbon        	= require('node-bourbon'),
+	ftp            	= require('vinyl-ftp'),
+	notify         	= require("gulp-notify");
 
 gulp.task('browser-sync', function() {
 	browserSync({
@@ -75,7 +77,7 @@ gulp.task('imagemin', function() {
 			svgoPlugins: [{removeViewBox: false}],
 			use: [pngquant()]
 		})))
-		.pipe(gulp.dest('dist/img')); 
+		.pipe(gulp.dest('dist/img'));
 });
 
 gulp.task('buildhtml', function() {
@@ -84,6 +86,8 @@ gulp.task('buildhtml', function() {
       prefix: '@@'
     }))
     .pipe(gulpRemoveHtml())
+	.pipe(removeHtmlComments())
+	.pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest('dist/'));
 });
 

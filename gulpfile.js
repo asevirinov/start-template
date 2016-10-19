@@ -110,7 +110,8 @@ gulp.task('build', ['removedist', 'buildhtml', 'imagemin', 'sass', 'libs'], func
 		]).pipe(gulp.dest('dist/css'));
 	// Забираем файл .htaccess если он есть
 	var buildFiles = gulp.src([
-		'app/.htaccess'
+		'app/.htaccess',
+		'app/humans.txt'
 	]).pipe(gulp.dest('dist'));
 	// Забираем шрифты
 	var buildFonts = gulp.src('app/fonts/**/*').pipe(gulp.dest('dist/fonts'));

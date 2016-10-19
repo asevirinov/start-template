@@ -6,10 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org:xprocessorx/start-template.git"
+  },
   "author": "Alexander Sevirinov",
   "license": "ISC",
+  "homepage": "https://bitbucket.org/xprocessorx/start-template#readme",
   "devDependencies": {
-    "browser-sync": "^2.17.3",
+    "browser-sync": "^2.17.5",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",

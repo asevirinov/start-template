@@ -30,7 +30,7 @@ gulp.task('browser-sync', function() {
 });
 
 // Компиляция SASS/SCSS кода в CSS
-gulp.task('sass', ['headersass'], function() {
+gulp.task('sass', ['headersass', 'gridsass'], function() {
 	return gulp.src('app/sass/**/*.scss') // Директория с файлами для компиляции
 		.pipe(sass({
 			includePaths: bourbon.includePaths // Подключаем Bourbon
@@ -55,6 +55,19 @@ gulp.task('headersass', function() {
 		.pipe(browserSync.reload({stream: true})) // Говорим браузеру что код изменился
 });
 
+// Компиляция SASS/SCSS кода в CSS
+gulp.task('gridsass', function() {
+	return gulp.src('app/grid.scss') // Файл для компиляции
+		.pipe(sass({
+			includePaths: bourbon.includePaths // Подключаем Bourbon
+		}).on("error", notify.onError())) // Отображаем уведомления в случае ошибок
+		.pipe(rename({suffix: '.min', prefix : ''})) // Переименовываем файл
+		.pipe(autoprefixer(['last 15 versions'])) // Добавляем префиксы
+		.pipe(cleanCSS()) // Сжимаем CSS
+		.pipe(gulp.dest('app')) // Отправляем в указанную директорию
+		.pipe(browserSync.reload({stream: true})) // Говорим браузеру что код изменился
+});
+
 // Объединение и сжатие JS плагинов
 gulp.task('libs', function() {
 	return gulp.src([ // Указываем точный путь к файлам через запятую
@@ -68,6 +81,7 @@ gulp.task('libs', function() {
 
 // Комплексная команда для отслеживания изменений
 gulp.task('watch', ['sass', 'libs', 'browser-sync'], function() {
+	gulp.watch('app/grid.scss', ['gridsass']); // Отслеживаем файл grid.scss
 	gulp.watch('app/header.scss', ['headersass']); // Отслеживаем файл header.scss
 	gulp.watch('app/sass/**/*.scss', ['sass']); // Отслеживаем все файлы в папке sass
 	gulp.watch('app/*.html', browserSync.reload); // Отслеживаем html файл

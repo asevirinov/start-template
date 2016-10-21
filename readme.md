@@ -80,22 +80,4 @@ gulp clearcache
 └── readme.md                  # Документация шаблона
 ```
 
-#### Обычные спрайты
-
-Для подключения иконки используется примесь `sprite` со значением `$icon`, где `icon` это название PNG иконки, например:
-```css
-.joy
-    sprite $joy
-```
-
-В собранном виде в CSS добавится только обычный спрайт и это будет выглядеть так:
-```css
-.joy {
-    background-image: url("../images/sprites/emoji.png");
-    background-position: 32px 0px;
-    width: 24px;
-    height: 24px;
-}
-```
-
-## [Внеси свой вклад в развитие проекта!](https://github.com/CSSSR/csssr-project-template/blob/master/contributing.md)
+## [Внеси свой вклад в развитие проекта!](https://github.com/xprocessorx/start-template/blob/master/contributing.md)

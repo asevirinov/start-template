@@ -60,7 +60,7 @@ gulp clearcache
 │   ├── sass/                  # Стили
 │   │   ├──grid/              # Разметки сетки
 │   │   │   ├── _fixed.scss    # Фиксированная bootstrap сетка (1200px)
-│   │   │   ├── _responsive.scss # Адаптивная bootstrap сетка (v.3.3.7)
+│   │   │   └── _responsive.scss # Адаптивная bootstrap сетка (v.3.3.7)
 │   │   ├── _base.scss         # Глобальные стили проекта
 │   │   ├── _libs.scss         # Подключение стилей плагинов
 │   │   ├── _media.scss        # Стили медиа запросов (First mobile или First Desktop)

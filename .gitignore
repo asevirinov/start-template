@@ -1,3 +1,5 @@
 /node_modules/
 /dist/
 /app/css/
+/app/grid.min.css
+/app/header.min.css

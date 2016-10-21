@@ -2,22 +2,22 @@
 @import "vars";
 
 *::-webkit-input-placeholder {
-	color: $default-color;
+	color: $black;
 	opacity: 1;
 }
 
 *:-moz-placeholder {
-	color: $default-color;
+	color: $black;
 	opacity: 1;
 }
 
 *::-moz-placeholder {
-	color: $default-color;
+	color: $black;
 	opacity: 1;
 }
 
 *:-ms-input-placeholder {
-	color: $default-color;
+	color: $black;
 	opacity: 1;
 }
 
@@ -27,12 +27,12 @@ html {
 
 body input:focus:required:invalid,
 body textarea:focus:required:invalid {
-	color: $default-color;
+	color: $black;
 }
 
 body input:required:valid,
 body textarea:required:valid {
-	color: $default-color;
+	color: $black;
 }
 
 body {
@@ -42,5 +42,5 @@ body {
 	line-height: 1.6;
 	font-family: $default-font;
 	overflow-x: hidden;
-	color: $default-color;
+	color: $black;
 }

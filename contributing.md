@@ -16,13 +16,13 @@
 
 ### Поиск
 
-Прежде чем что-либо написать, следует сначала поискать в [ишью](https://github.com/CSSSR/csssr-project-template/issues), [пулл-реквестах](https://github.com/CSSSR/csssr-project-template/pulls) и [ридми](https://github.com/CSSSR/csssr-project-template#readme) интересующий вопрос. Возможно, это уже обсуждалось.
-Если ты уверен, что твой вопрос раньше не встречался, то смело заводи [ишью](https://github.com/CSSSR/csssr-project-template/issues/new).
+Прежде чем что-либо написать, следует сначала поискать в [ишью](https://github.com/xprocessorx/start-template/issues), [пулл-реквестах](https://github.com/xprocessorx/start-template/pulls) и [ридми](https://github.com/xprocessorx/start-template/blob/master/#readme) интересующий вопрос. Возможно, это уже обсуждалось.
+Если ты уверен, что твой вопрос раньше не встречался, то смело заводи [ишью](https://github.com/xprocessorx/start-template/issues/new).
 
 
 ### Вопрос
 
-- Создай вопрос в [ишью](https://github.com/CSSSR/csssr-project-template/issues/new).
+- Создай вопрос в [ишью](https://github.com/xprocessorx/start-template/issues/new).
 - Кратко опиши суть вопроса.
 - **Вопрос должен касаться только этого проекта.** Не стоит злоупотреблять ишью ради своей выгоды.  
 Вопросы по вёрстке, программированию, какому-либо инструменту, библиотеке, фреймворку, плагину  
@@ -35,7 +35,7 @@
 
 ### Репорт бага
 
-- Если ты заметил баг, сообщи об этом в [ишью](https://github.com/CSSSR/csssr-project-template/issues/new).
+- Если ты заметил баг, сообщи об этом в [ишью](https://github.com/xprocessorx/start-template/issues/new).
 - Кратко опиши, с чем он связан.
 - Приложи лог или код с проблемой, предварительно оформив его в маркдауне.
 - Ссылки на строки кода.
@@ -45,21 +45,13 @@
 
 ### Обсуждение идеи пулл-реквеста
 
-- Создай [ишью](https://github.com/CSSSR/csssr-project-template/issues/new).
+- Создай [ишью](https://github.com/xprocessorx/start-template/issues/new).
 - Кратко опиши, что ты хочешь предложить.
 - Приложи код, предварительно оформив его в маркдауне.
 - Ссылки на строки кода.
 - Скрин при необходимости и только с конкретной областью, не нужно скринить весь рабочий стол.
 - Если ты хочешь сделать пулл-реквест, напиши об этом.
 - Если уже есть реализация в форке этого репозитория, предложи аппрувнуть пулл-реквест.
-
-
-## Как заводить пулл-реквесты
-
-- В комментарии укажи ссылку на обсуждение этого пулл-реквеста, чтобы не дублировать.
-- Чтобы коммиты были понятными и в едином стиле, следует придерживаться
-[соглашения по именованию коммитов](https://github.com/CSSSR/sputnik/blob/master/Git.md#5-Соглашение-по-именованию-коммитов). 
-- Соблюдай код-стайл от ESLint (TODO: добавить ишью для добавления проверки код-стайла тасков).
 
 
 ## Помогай с ответами на вопросы
@@ -71,6 +63,6 @@
 
 ## Как ещё можно помочь проекту?
 
-- [Ставь звезду](https://github.com/CSSSR/csssr-project-template/stargazers).
-- Делись [ссылкой на наш репозиторий](https://github.com/CSSSR/csssr-project-template) в соцсетях, форумах и любых других сообществах.
+- [Ставь звезду](https://github.com/xprocessorx/start-template/stargazers).
+- Делись [ссылкой на наш репозиторий](https://github.com/xprocessorx/start-template) в соцсетях, форумах и любых других сообществах.
 - И просто рассказывай о нас :)

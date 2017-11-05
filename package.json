@@ -1,38 +1,29 @@
 {
-  "name": "starttemplate",
-  "version": "1.0.0",
-  "description": "Start HTML Template",
+  "name": "bootstrapTemplate",
+  "version": "1.0.1",
+  "description": "Bootstrap - Start HTML Template",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@bitbucket.org:xprocessorx/start-template.git"
-  },
-  "author": "Alexander Sevirinov",
+  "author": "DumpCode",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/xprocessorx/start-template#readme",
   "devDependencies": {
-    "browser-sync": "^2.17.5",
-    "del": "^2.2.2",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "browser-sync": "^2.18.13",
+    "del": "^3.0.0",
     "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^3.1.1",
-    "gulp-cache": "^0.4.5",
-    "gulp-clean-css": "^2.0.13",
-    "gulp-concat": "^2.6.0",
-    "gulp-file-include": "^0.14.0",
-    "gulp-htmlmin": "^3.0.0",
-    "gulp-imagemin": "^3.0.3",
-    "gulp-notify": "^2.2.0",
-    "gulp-remove-html": "^1.1.2",
-    "gulp-remove-html-comments": "^1.0.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-babel": "^7.0.0",
+    "gulp-cache": "^0.5.0",
+    "gulp-clean-css": "^3.9.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-imagemin": "^3.4.0",
+    "gulp-notify": "^3.0.0",
     "gulp-rename": "^1.2.2",
-    "gulp-sass": "^2.3.2",
-    "gulp-uglify": "^2.0.0",
-    "gulp-util": "^3.0.7",
-    "imagemin-pngquant": "^5.0.0",
-    "node-bourbon": "^4.2.8",
-    "vinyl-ftp": "^0.5.0"
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^3.0.0"
   }
 }

@@ -1,7 +1,7 @@
 /node_modules/
 /dist/
+/.git/
 /app/css/
-/app/grid.min.css
-/app/header.min.css
-.idea
-yarn.lock
+/**/*.psd
+/**/Thumbs.db
+/**/*.DS_Store

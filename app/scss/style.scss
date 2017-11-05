@@ -1,0 +1,12 @@
+@import "fonts";
+@import "libs";
+@import "vars";
+// Blocks
+@import "_blocks/header";
+
+body {
+  font-family: $default-font;
+}
+
+// Media
+@import "media";

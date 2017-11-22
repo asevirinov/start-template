@@ -12,7 +12,11 @@ var gulp = require('gulp'),
     cache = require('gulp-cache'),
     autoprefixer = require('gulp-autoprefixer'),
     notify = require('gulp-notify'),
-    ftp = require('vinyl-ftp');
+    ftp = require('vinyl-ftp'),
+    gulpif = require('gulp-if'),
+    sourcemaps = require('gulp-sourcemaps');
+
+var production = false;
 
 // Пользовательские скрипты проекта
 
@@ -20,11 +24,13 @@ gulp.task('app-js', function() {
   return gulp.src([
     'app/js/app.js',
   ]).
+      pipe(sourcemaps.init()).
       pipe(babel({
         presets: ['env']
       })).
       pipe(concat('app.min.js')).
-      pipe(uglify()).
+      pipe(gulpif(production, uglify())).
+      pipe(sourcemaps.write('/')).
       pipe(gulp.dest('app/js'));
 });
 
@@ -53,8 +59,10 @@ gulp.task('js', ['app-js', 'bootstrap-js'], function() {
     // 'app/libs/jquery/dist/jquery.slim.js',
     'app/libs/bootstrap/js/bootstrap.min.js'
   ]).
+      pipe(sourcemaps.init()).
       pipe(concat('vendor.min.js')).
-      // pipe(uglify()).
+      pipe(gulpif(production, uglify())).
+      pipe(sourcemaps.write('/')).
       pipe(gulp.dest('app/js')).
       pipe(browserSync.reload({stream: true}));
 });
@@ -73,9 +81,11 @@ gulp.task('browser-sync', function() {
 gulp.task('scss', function() {
   return gulp.src('app/scss/**/*.scss').
       pipe(scss({outputStyle: 'expand'}).on('error', notify.onError())).
+      pipe(sourcemaps.init()).
       pipe(rename({suffix: '.min', prefix: ''})).
       pipe(autoprefixer(['last 15 versions'])).
-      // pipe(cleanCSS()).
+      pipe(gulpif(production, cleanCSS())).
+      pipe(sourcemaps.write('/')).
       pipe(gulp.dest('app/css')).
       pipe(browserSync.reload({stream: true}));
 });
@@ -110,12 +120,11 @@ gulp.task('build', ['rename-htaccess', 'removedist', 'imagemin', 'scss', 'js'],
       ]).pipe(gulp.dest('dist'));
 
       var buildCss = gulp.src([
-        'app/css/style.min.css',
+        'app/css/*.min.*',
       ]).pipe(gulp.dest('dist/css'));
 
       var buildJs = gulp.src([
-        'app/js/app.min.js',
-        'app/js/vendor.min.js'
+        'app/js/*.min.*'
       ]).pipe(gulp.dest('dist/js'));
 
       var buildFonts = gulp.src([

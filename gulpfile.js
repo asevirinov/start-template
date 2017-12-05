@@ -99,7 +99,7 @@ gulp.task('watch', ['scss', 'js', 'browser-sync'], function() {
 
 gulp.task('imagemin', function() {
   return gulp.src('app/img/**/*').
-      // pipe(cache(imagemin())).
+      pipe(cache(imagemin())).
       pipe(imagemin()).
       pipe(gulp.dest('dist/img'));
 });

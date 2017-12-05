@@ -61,5 +61,3 @@ gulp clearcache
 ├── package.json                # Список npm модулей
 └── readme.md                   # Документация шаблона
 ```
-
-## [Внеси свой вклад в развитие проекта!](https://github.com/xprocessorx/start-template/blob/master/contributing.md)

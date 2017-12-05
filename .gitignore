@@ -9,3 +9,4 @@
 .idea/
 /yarn.lock
 app/js/vendor.min.js
+/package-lock.json

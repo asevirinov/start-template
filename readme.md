@@ -6,7 +6,7 @@
 
 ### Склонируй репозиторий и перейди в папку проекта
 ```
-git clone git@github.com:xprocessorx/start-template.git new-project && cd new-project
+git clone git@github.com:asevirinov/start-template.git new-project && cd new-project
 ```
 
 ### Установи модули
@@ -14,13 +14,7 @@ git clone git@github.com:xprocessorx/start-template.git new-project && cd new-pr
 npm i
 ```
 
-### Запусти шаблон
-```
-gulp
-```
-
-
-## Команды для запуска
+## Команды gulp
 
 ### Запуск с отслеживанием изменений
 ```
@@ -32,12 +26,12 @@ gulp
 gulp build
 ```
 
-### Очистка папки `dist`
+### Удаление папки `dist`
 ```
 gulp removedist
 ```
 
-### Очистка кеша gulp
+### Очистка кеша
 ```
 gulp clearcache
 ```
@@ -49,18 +43,14 @@ gulp clearcache
 │   ├── fonts/                  # Шрифты
 │   ├── img/                    # Изображения
 │   ├── js/                     # Скрипты
-│   │   ├── libs.min.js         # В этом файле объединяются все плагины из папки libs
-│   │   └── common.js           # Главный скрипт, где Вы будете писать свой код
-│   ├── libs/                   # Плагины (Уже содержит jQuery v.3.2.1)
+│   │   └── app.js              # Для вашего кода (ES6)
+│   ├── libs/                   # Плагины (Уже содержит jQuery v.3.2.1 и исходники bootstrap 4)
 │   ├── scss/                   # Стили
-│   │   ├──_blocks/             # Стили блоков
-│   │   │   ├── _header.scss    # Стиль шапки
-│   │   │   └── _example.scss   # По аналогии создай другие блоки
 │   │   ├──_mixins/             # Миксины
 │   │   │   └── _font-face.scss # Миксин font-face
 │   │   ├── _libs.scss          # Подключение стилей плагинов
-│   │   ├── _media.scss         # Стили медиа запросов (First mobile или First Desktop)
-│   │   ├── _vars.scss          # Файл переменных
+│   │   ├── _media.scss         # Стили медиа запросов (First mobile)
+│   │   ├── _vars.scss          # Переменные
 │   │   ├── fonts.scss          # Подключение шрифтов
 │   │   └── style.scss          # Основной файл стилей проекта
 │   ├── ht.access               # Переименовать в .htaccess перед сборкой проекта для публикаци
@@ -68,8 +58,7 @@ gulp clearcache
 ├── .bowerrc                    # Конфигурация bower (указывает куда устанавливать плагины)
 ├── .gitignore                  # Список исключённых файлов из Git
 ├── gulpfile.js                 # Конфигурация настроек Gulp
-├── .gitignore                  # Список исключённых файлов из Git
-├── package.json                # Список модулей и прочей информации
+├── package.json                # Список npm модулей
 └── readme.md                   # Документация шаблона
 ```
 

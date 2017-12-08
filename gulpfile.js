@@ -1,42 +1,52 @@
-var gulp = require('gulp'),
-    gutil = require('gulp-util'),
-    babel = require('gulp-babel'),
-    scss = require('gulp-sass'),
-    browserSync = require('browser-sync'),
-    concat = require('gulp-concat'),
-    uglify = require('gulp-uglify'),
-    cleanCSS = require('gulp-clean-css'),
-    rename = require('gulp-rename'),
+const browserSync = require('browser-sync'),
+    cssSort = require('css-declaration-sorter'),
     del = require('del'),
-    imagemin = require('gulp-imagemin'),
-    cache = require('gulp-cache'),
+    gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
-    notify = require('gulp-notify'),
-    ftp = require('vinyl-ftp'),
+    babel = require('gulp-babel'),
+    cache = require('gulp-cache'),
+    cleanCSS = require('gulp-clean-css'),
+    concat = require('gulp-concat'),
     gulpif = require('gulp-if'),
-    sourcemaps = require('gulp-sourcemaps');
+    imagemin = require('gulp-imagemin'),
+    notify = require('gulp-notify'),
+    postCss = require('gulp-postcss'),
+    rename = require('gulp-rename'),
+    scss = require('gulp-sass'),
+    sourcemaps = require('gulp-sourcemaps'),
+    uglify = require('gulp-uglify'),
+    gutil = require('gulp-util'),
+    ftp = require('vinyl-ftp');
 
-var devMode = true; // если false, JS и CSS будут сжаты
+// если false, JS и CSS будут сжаты
+const devMode = true;
 
 // Сборка app JS
 gulp.task('app-js', function() {
-  return gulp.src([
-    'app/js/app.js', // за каким файлом следить
-  ]).
-      pipe(sourcemaps.init()).// инициализация sourcemap
+  // за каким файлом следить
+  return gulp.src(['app/js/app.js']).
+      // инициализация sourcemap
+      pipe(sourcemaps.init()).
+      // компиляция в ES5
       pipe(babel({
-        presets: ['env'] // компиляция в ES5
+        presets: ['env']
       })).
-      pipe(concat('app.min.js')).// название выходного файла
-      pipe(gulpif(!devMode, uglify())).// сжатие по условию
-      pipe(sourcemaps.write('/')).// создание sourcemap
-      pipe(gulp.dest('app/js')); // куда положить файл
+      // название выходного файла
+      pipe(concat('app.min.js')).
+      // сжатие по условию
+      pipe(gulpif(!devMode, uglify())).
+      // создание sourcemap
+      pipe(sourcemaps.write('/')).
+      // куда положить файл
+      pipe(gulp.dest('app/js'));
 });
 
 // Сборка bootstrap JS
 gulp.task('bootstrap-js', function() {
-  return gulp.src([ // закомментировать что не нужно
-    'app/libs/popper.js/dist/umd/popper.js', // всегда вверху! (обязателен для tooltip.js и popover.js)
+  // закомментировать что не нужно
+  return gulp.src([
+    // popper.js всегда вверху! (обязателен для tooltip.js и popover.js)
+    'app/libs/popper.js/dist/umd/popper.js',
     'app/libs/bootstrap/js/dist/util.js',
     'app/libs/bootstrap/js/dist/alert.js',
     'app/libs/bootstrap/js/dist/button.js',
@@ -49,8 +59,10 @@ gulp.task('bootstrap-js', function() {
     'app/libs/bootstrap/js/dist/tooltip.js',
     'app/libs/bootstrap/js/dist/popover.js'
   ]).
-      pipe(concat('bootstrap.min.js')).// имя выходного файла
-      pipe(gulp.dest('app/libs/bootstrap/js')); // куда положить файл
+      // имя выходного файла
+      pipe(concat('bootstrap.min.js')).
+      // куда положить файл
+      pipe(gulp.dest('app/libs/bootstrap/js'));
 });
 
 // Сборка vendor JS
@@ -60,12 +72,18 @@ gulp.task('js', ['app-js', 'bootstrap-js'], function() {
     // 'app/libs/jquery/dist/jquery.slim.js', // легкая версия jQuery (без ajax)
     'app/libs/bootstrap/js/bootstrap.min.js'
   ]).
-      pipe(sourcemaps.init()).// инициализация sourcemap
-      pipe(concat('vendor.min.js')).// название выходного файла
-      pipe(gulpif(!devMode, uglify())).// сжатие по условию
-      pipe(sourcemaps.write('/')).// создание sourcemap
-      pipe(gulp.dest('app/js')).// куда положить файл
-      pipe(browserSync.reload({stream: true})); // перезагрузить браузер после изменения содержимого файлов
+      // инициализация sourcemap
+      pipe(sourcemaps.init()).
+      // название выходного файла
+      pipe(concat('vendor.min.js')).
+      // сжатие по условию
+      pipe(gulpif(!devMode, uglify())).
+      // создание sourcemap
+      pipe(sourcemaps.write('/')).
+      // куда положить файл
+      pipe(gulp.dest('app/js')).
+      // перезагрузить браузер после изменения содержимого файлов
+      pipe(browserSync.reload({stream: true}));
 });
 
 // автообновление браузера
@@ -74,31 +92,31 @@ gulp.task('browser-sync', function() {
     server: {
       baseDir: 'app' // каталог отслеживания
     },
-    notify: false, // отключить уведомления
-    // tunnel: true,
-    // tunnel: "projectmane", //Demonstration page: http://projectmane.localtunnel.me
+    notify: false // отключить уведомления
   });
 });
 
 // Сборка CSS
 gulp.task('scss', function() {
+  // за какими файлами сделить?
   return gulp.src('app/scss/**/*.scss').
-      // за какими файлами сделить?
-      pipe(scss({outputStyle: 'expand'}).on('error', notify.onError())).
       // сообщать в терминале об ошибках
-      pipe(sourcemaps.init()).
+      pipe(scss({outputStyle: 'expand'}).on('error', notify.onError())).
       // инициализация sourcemap
-      pipe(rename({suffix: '.min', prefix: ''})).
+      pipe(sourcemaps.init()).
       // переименовывание файла
-      pipe(autoprefixer(['last 15 versions'])).
+      pipe(rename({suffix: '.min', prefix: ''})).
       // версия автопрефиксов
-      pipe(gulpif(!devMode, cleanCSS())).
+      pipe(autoprefixer(['last 15 versions'])).
+      pipe(postCss([cssSort({order: 'smacss'})])).
       // сжатие по условию
-      pipe(sourcemaps.write('/')).
+      pipe(gulpif(!devMode, cleanCSS())).
       // создание sourcemap
-      pipe(gulp.dest('app/css')).
+      pipe(sourcemaps.write('/')).
       // куда положить файл
-      pipe(browserSync.reload({stream: true})); // перезагрузить страницу браузера
+      pipe(gulp.dest('app/css')).
+      // перезагрузить страницу браузера
+      pipe(browserSync.reload({stream: true}));
 });
 
 // метод сдележения за файлами
@@ -131,20 +149,20 @@ gulp.task('rename-htaccess', function() {
 gulp.task('build', ['rename-htaccess', 'removedist', 'imagemin', 'scss', 'js'],
     function() {
 
-      var buildFiles = gulp.src([
+      let buildFiles = gulp.src([
         'app/*.html',
         'app/.htaccess',
       ]).pipe(gulp.dest('dist'));
 
-      var buildCss = gulp.src([
+      let buildCss = gulp.src([
         'app/css/*.min.*',
       ]).pipe(gulp.dest('dist/css'));
 
-      var buildJs = gulp.src([
+      let buildJs = gulp.src([
         'app/js/*.min.*'
       ]).pipe(gulp.dest('dist/js'));
 
-      var buildFonts = gulp.src([
+      let buildFonts = gulp.src([
         'app/fonts/**/*',
       ]).pipe(gulp.dest('dist/fonts'));
 
@@ -162,7 +180,7 @@ gulp.task('clearcache', function() {
 
 // отправка файлов по FTP
 gulp.task('deploy', function() {
-  var conn = ftp.create({
+  let conn = ftp.create({
     host: '', // хост
     user: '', // логин
     password: '', // пароль
@@ -170,7 +188,7 @@ gulp.task('deploy', function() {
     log: gutil.log // название файла логов
   });
   // массив файлов для закачки
-  var globs = [
+  let globs = [
     'dist/**',
     'dist/.htaccess',
   ];

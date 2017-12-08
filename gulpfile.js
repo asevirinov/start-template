@@ -16,7 +16,7 @@ var gulp = require('gulp'),
     gulpif = require('gulp-if'),
     sourcemaps = require('gulp-sourcemaps');
 
-var production = false; // если true, JS и CSS будут сжаты
+var devMode = true; // если false, JS и CSS будут сжаты
 
 // Сборка app JS
 gulp.task('app-js', function() {
@@ -28,7 +28,7 @@ gulp.task('app-js', function() {
         presets: ['env'] // компиляция в ES5
       })).
       pipe(concat('app.min.js')).// название выходного файла
-      pipe(gulpif(production, uglify())).// сжатие по условию
+      pipe(gulpif(!devMode, uglify())).// сжатие по условию
       pipe(sourcemaps.write('/')).// создание sourcemap
       pipe(gulp.dest('app/js')); // куда положить файл
 });
@@ -62,7 +62,7 @@ gulp.task('js', ['app-js', 'bootstrap-js'], function() {
   ]).
       pipe(sourcemaps.init()).// инициализация sourcemap
       pipe(concat('vendor.min.js')).// название выходного файла
-      pipe(gulpif(production, uglify())).// сжатие по условию
+      pipe(gulpif(!devMode, uglify())).// сжатие по условию
       pipe(sourcemaps.write('/')).// создание sourcemap
       pipe(gulp.dest('app/js')).// куда положить файл
       pipe(browserSync.reload({stream: true})); // перезагрузить браузер после изменения содержимого файлов
@@ -92,7 +92,7 @@ gulp.task('scss', function() {
       // переименовывание файла
       pipe(autoprefixer(['last 15 versions'])).
       // версия автопрефиксов
-      pipe(gulpif(production, cleanCSS())).
+      pipe(gulpif(!devMode, cleanCSS())).
       // сжатие по условию
       pipe(sourcemaps.write('/')).
       // создание sourcemap

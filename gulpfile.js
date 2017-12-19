@@ -13,7 +13,6 @@ const browserSync = require('browser-sync'),
     postCss = require('gulp-postcss'),
     rename = require('gulp-rename'),
     scss = require('gulp-sass'),
-    sourcemaps = require('gulp-sourcemaps'),
     uglify = require('gulp-uglify'),
     gutil = require('gulp-util'),
     ftp = require('vinyl-ftp');
@@ -22,11 +21,9 @@ const browserSync = require('browser-sync'),
 const devMode = true;
 
 // Сборка app JS
-gulp.task('app-js', function() {
+gulp.task('app-js', () => {
   // за каким файлом следить
   return gulp.src(['app/js/app.js']).
-      // инициализация sourcemap
-      pipe(sourcemaps.init()).
       // компиляция в ES5
       pipe(babel({
         presets: ['env']
@@ -35,14 +32,12 @@ gulp.task('app-js', function() {
       pipe(concat('app.min.js')).
       // сжатие по условию
       pipe(gulpif(!devMode, uglify())).
-      // создание sourcemap
-      pipe(sourcemaps.write('/')).
       // куда положить файл
       pipe(gulp.dest('app/js'));
 });
 
 // Сборка bootstrap JS
-gulp.task('bootstrap-js', function() {
+gulp.task('bootstrap-js', () => {
   // закомментировать что не нужно
   return gulp.src([
     // popper.js всегда вверху! (обязателен для tooltip.js и popover.js)
@@ -66,20 +61,16 @@ gulp.task('bootstrap-js', function() {
 });
 
 // Сборка vendor JS
-gulp.task('js', ['app-js', 'bootstrap-js'], function() {
+gulp.task('js', ['app-js', 'bootstrap-js'], () => {
   return gulp.src([
     'app/libs/jquery/dist/jquery.js', // полная версия jQuery
     // 'app/libs/jquery/dist/jquery.slim.js', // легкая версия jQuery (без ajax)
     'app/libs/bootstrap/js/bootstrap.min.js'
   ]).
-      // инициализация sourcemap
-      pipe(sourcemaps.init()).
       // название выходного файла
       pipe(concat('vendor.min.js')).
       // сжатие по условию
       pipe(gulpif(!devMode, uglify())).
-      // создание sourcemap
-      pipe(sourcemaps.write('/')).
       // куда положить файл
       pipe(gulp.dest('app/js')).
       // перезагрузить браузер после изменения содержимого файлов
@@ -87,7 +78,7 @@ gulp.task('js', ['app-js', 'bootstrap-js'], function() {
 });
 
 // автообновление браузера
-gulp.task('browser-sync', function() {
+gulp.task('browser-sync', () => {
   browserSync({
     server: {
       baseDir: 'app' // каталог отслеживания
@@ -97,13 +88,11 @@ gulp.task('browser-sync', function() {
 });
 
 // Сборка CSS
-gulp.task('scss', function() {
+gulp.task('scss', () => {
   // за какими файлами сделить?
   return gulp.src('app/scss/**/*.scss').
       // сообщать в терминале об ошибках
       pipe(scss({outputStyle: 'expand'}).on('error', notify.onError())).
-      // инициализация sourcemap
-      pipe(sourcemaps.init()).
       // переименовывание файла
       pipe(rename({suffix: '.min', prefix: ''})).
       // версия автопрефиксов
@@ -111,8 +100,6 @@ gulp.task('scss', function() {
       pipe(postCss([cssSort({order: 'smacss'})])).
       // сжатие по условию
       pipe(gulpif(!devMode, cleanCSS())).
-      // создание sourcemap
-      pipe(sourcemaps.write('/')).
       // куда положить файл
       pipe(gulp.dest('app/css')).
       // перезагрузить страницу браузера
@@ -120,7 +107,7 @@ gulp.task('scss', function() {
 });
 
 // метод сдележения за файлами
-gulp.task('watch', ['scss', 'js', 'browser-sync'], function() {
+gulp.task('watch', ['scss', 'js', 'browser-sync'], () => {
   gulp.watch([
     'app/scss/**/*.scss',
     'app/libs/bootstrap/scss/**/*.scss'
@@ -130,15 +117,14 @@ gulp.task('watch', ['scss', 'js', 'browser-sync'], function() {
 });
 
 // сжатие изображений
-gulp.task('imagemin', function() {
+gulp.task('imagemin', () => {
   return gulp.src('app/img/**/*').
-      pipe(cache(imagemin())).
       pipe(imagemin()).
       pipe(gulp.dest('dist/img'));
 });
 
 // переименовывание htaccess
-gulp.task('rename-htaccess', function() {
+gulp.task('rename-htaccess', () => {
   return gulp.src('app/htaccess.txt').
       pipe(
           rename({suffix: '', prefix: '.', basename: 'htaccess', extname: ''})).
@@ -147,7 +133,7 @@ gulp.task('rename-htaccess', function() {
 
 // сборка проекта
 gulp.task('build', ['rename-htaccess', 'removedist', 'imagemin', 'scss', 'js'],
-    function() {
+    () => {
 
       let buildFiles = gulp.src([
         'app/*.html',
@@ -155,11 +141,11 @@ gulp.task('build', ['rename-htaccess', 'removedist', 'imagemin', 'scss', 'js'],
       ]).pipe(gulp.dest('dist'));
 
       let buildCss = gulp.src([
-        'app/css/*.min.*',
+        'app/css/*.*',
       ]).pipe(gulp.dest('dist/css'));
 
       let buildJs = gulp.src([
-        'app/js/*.min.*'
+        'app/js/*.*'
       ]).pipe(gulp.dest('dist/js'));
 
       let buildFonts = gulp.src([
@@ -169,17 +155,17 @@ gulp.task('build', ['rename-htaccess', 'removedist', 'imagemin', 'scss', 'js'],
     });
 
 // удаление папки dist
-gulp.task('removedist', function() {
+gulp.task('removedist', () => {
   return del.sync('dist');
 });
 
 // очистка кеша
-gulp.task('clearcache', function() {
+gulp.task('clearcache', () => {
   return cache.clearAll();
 });
 
 // отправка файлов по FTP
-gulp.task('deploy', function() {
+gulp.task('deploy', () => {
   let conn = ftp.create({
     host: '', // хост
     user: '', // логин

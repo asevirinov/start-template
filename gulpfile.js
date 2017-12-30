@@ -97,6 +97,7 @@ gulp.task('scss', () => {
       pipe(rename({suffix: '.min', prefix: ''})).
       // версия автопрефиксов
       pipe(autoprefixer(['last 15 versions'])).
+      // сортировка и объединения похожих стилей
       pipe(postCss([cssSort({order: 'smacss'})])).
       // сжатие по условию
       pipe(gulpif(!devMode, cleanCSS())).

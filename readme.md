@@ -11,7 +11,7 @@ git clone git@github.com:asevirinov/start-template.git new-project && cd new-pro
 
 ### Установи модули
 ```
-npm i
+yarn install
 ```
 
 ## Команды gulp
@@ -53,7 +53,7 @@ gulp clearcache
 │   │   ├── _vars.scss          # Переменные
 │   │   ├── fonts.scss          # Подключение шрифтов
 │   │   └── style.scss          # Основной файл стилей проекта
-│   ├── ht.access               # Переименовать в .htaccess перед сборкой проекта для публикаци
+│   ├── htaccess.txt            # Переименовать в .htaccess перед сборкой проекта для публикаци
 │   └── index.html              # Основной файл разметки
 ├── .bowerrc                    # Конфигурация bower (указывает куда устанавливать плагины)
 ├── .gitignore                  # Список исключённых файлов из Git

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Bootstrap template</title>
-    <meta name="description" content="Описание сайта">
+    <meta name="description" content="Description">
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
@@ -16,10 +16,127 @@
     <link rel="shortcut icon" href="img/favicon/favicon.ico">
     <meta name="msapplication-config" content="img/favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
-    <style>body { opacity: 0; overflow-x: hidden; } html { background-color: #fff; }</style>
+    <style>
+        body {
+            opacity: 0;
+        }
+    </style>
 </head>
 <body>
-<h1>Hello, world!</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <!-- form -->
+            <form novalidate class="my-3">
+                <div class="form-row">
+                    <!-- text -->
+                    <div class="col-md-4 form-group">
+                        <label for="text">Text</label>
+                        <input type="text" id="text" name="text" class="form-control"
+                               placeholder="Text" required>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Please fill in a text field.</div>
+                    </div>
+                    <!-- tel -->
+                    <div class="col-md-4 form-group">
+                        <label for="tel">Tel</label>
+                        <input type="tel" id="tel" name="tel" class="form-control"
+                               placeholder="Phone" required>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Please fill in a phone field.</div>
+                    </div>
+                    <!-- email -->
+                    <div class="col-md-4 form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" class="form-control"
+                               placeholder="E-mail" required>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Please fill in a e-mail field.</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <!-- checkbox -->
+                    <div class="col-md-4 form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="check" name="check" value="1" class="custom-control-input"
+                                   required>
+                            <label class="custom-control-label" for="check">Checkbox</label>
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">Please check a checkbox.</div>
+                        </div>
+                    </div>
+                    <!-- radio -->
+                    <div class="col-md-4 form-group">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="radio1" name="radio" value="1" class="custom-control-input"
+                                   required>
+                            <label class="custom-control-label" for="radio1">First radio button</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="radio2" name="radio" value="2" class="custom-control-input"
+                                   required>
+                            <label class="custom-control-label" for="radio2">Second radio button</label>
+                        </div>
+                    </div>
+                    <!-- radio inline -->
+                    <div class="col-md-4 form-group">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="radioInline1" name="radioInline" value="1"
+                                   class="custom-control-input" required>
+                            <label class="custom-control-label" for="radioInline1">First inline value</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="radioInline2" name="radioInline" value="2"
+                                   class="custom-control-input" required>
+                            <label class="custom-control-label" for="radioInline2">Second inline value</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <!-- date -->
+                    <div class="col-md-4 form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" name="date" class="form-control"
+                               min="1900-01-01" max="2100-12-31" required>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Please set a date.</div>
+                    </div>
+                    <!-- select -->
+                    <div class="col-md-4 form-group">
+                        <label for="select">Select</label>
+                        <select id="select" name="select" class="custom-select" required>
+                            <option selected disabled value="">Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Please select a value.</div>
+                    </div>
+                    <!-- textarea -->
+                    <div class="col-md-4 form-group">
+                        <label for="textarea">Textarea</label>
+                        <textarea id="textarea" name="textarea" class="form-control"
+                                  rows="2" placeholder="Textarea" required></textarea>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Please fill in a textarea.</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <!-- range -->
+                    <div class="col-md-12 form-group">
+                        <label for="range">Range</label>
+                        <input type="range" id="range" name="range" class="form-control" required>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Please set a range.</div>
+                    </div>
+                </div>
+                <!-- submit button -->
+                <button class="btn btn-primary" type="submit">Submit form</button>
+            </form>
+        </div>
+    </div>
+</div>
 <!-- CSS -->
 <link rel="stylesheet" href="css/style.min.css">
 <!-- JS -->

@@ -11,7 +11,6 @@
 app/js/vendor.min.js
 /package-lock.json
 yarn-error.log
-app/libs/bootstrap/js/bootstrap.min.js
-app/js/vendor.min.js.map
-app/js/app.min.js.map
+app/libs/bootstrap/js/bootstrap.js
 app/js/app.min.js
+app/libs/inputmask/dist/inputmask.js

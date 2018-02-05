@@ -17,30 +17,21 @@ const browserSync = require('browser-sync'),
     gutil = require('gulp-util'),
     ftp = require('vinyl-ftp');
 
-// если false, JS и CSS будут сжаты
 const devMode = true;
 
-// Сборка app JS
 gulp.task('app-js', () => {
-  // за каким файлом следить
   return gulp.src(['app/js/app.js']).
-      // компиляция в ES5
       pipe(babel({
         presets: ['env']
       })).
-      // название выходного файла
       pipe(concat('app.min.js')).
-      // сжатие по условию
       pipe(gulpif(!devMode, uglify())).
-      // куда положить файл
       pipe(gulp.dest('app/js'));
 });
 
-// Сборка bootstrap JS
 gulp.task('bootstrap-js', () => {
-  // закомментировать что не нужно
   return gulp.src([
-    // popper.js всегда вверху! (обязателен для tooltip.js и popover.js)
+    // popper.js only top!
     'app/libs/popper.js/dist/umd/popper.js',
     'app/libs/bootstrap/js/dist/util.js',
     'app/libs/bootstrap/js/dist/alert.js',
@@ -54,60 +45,61 @@ gulp.task('bootstrap-js', () => {
     'app/libs/bootstrap/js/dist/tooltip.js',
     'app/libs/bootstrap/js/dist/popover.js'
   ]).
-      // имя выходного файла
-      pipe(concat('bootstrap.min.js')).
-      // куда положить файл
+      pipe(concat('bootstrap.js')).
       pipe(gulp.dest('app/libs/bootstrap/js'));
 });
 
-// Сборка vendor JS
-gulp.task('js', ['app-js', 'bootstrap-js'], () => {
+gulp.task('inputmask-js', () => {
   return gulp.src([
-    'app/libs/jquery/dist/jquery.js', // полная версия jQuery
-    // 'app/libs/jquery/dist/jquery.slim.js', // легкая версия jQuery (без ajax)
-    'app/libs/bootstrap/js/bootstrap.min.js'
+    'app/libs/inputmask/dist/inputmask/inputmask.js',
+    'app/libs/inputmask/dist/inputmask/inputmask.extensions.js',
+    'app/libs/inputmask/dist/inputmask/inputmask.numeric.extensions.js',
+    'app/libs/inputmask/dist/inputmask/inputmask.date.extensions.js',
+    'app/libs/inputmask/dist/inputmask/inputmask.phone.extensions.js',
+    'app/libs/inputmask/dist/inputmask/jquery.inputmask.js',
+    'app/libs/inputmask/dist/inputmask/phone-codes/phone.js',
+    'app/libs/inputmask/dist/inputmask/phone-codes/phone-be.js',
+    'app/libs/inputmask/dist/inputmask/phone-codes/phone-nl.js',
+    'app/libs/inputmask/dist/inputmask/phone-codes/phone-uk.js',
+    'app/libs/inputmask/dist/inputmask/phone-codes/phone-ru.js'
   ]).
-      // название выходного файла
+      pipe(concat('inputmask.js')).
+      pipe(gulp.dest('app/libs/inputmask/dist'));
+});
+
+gulp.task('js', ['app-js', 'bootstrap-js', 'inputmask-js'], () => {
+  return gulp.src([
+    'app/libs/jquery/dist/jquery.js',
+    // 'app/libs/jquery/dist/jquery.slim.js',
+    'app/libs/bootstrap/js/bootstrap.js',
+    'app/libs/inputmask/dist/inputmask.js'
+  ]).
       pipe(concat('vendor.min.js')).
-      // сжатие по условию
       pipe(gulpif(!devMode, uglify())).
-      // куда положить файл
       pipe(gulp.dest('app/js')).
-      // перезагрузить браузер после изменения содержимого файлов
       pipe(browserSync.reload({stream: true}));
 });
 
-// автообновление браузера
 gulp.task('browser-sync', () => {
   browserSync({
     server: {
-      baseDir: 'app' // каталог отслеживания
+      baseDir: 'app'
     },
-    notify: false // отключить уведомления
+    notify: false
   });
 });
 
-// Сборка CSS
 gulp.task('scss', () => {
-  // за какими файлами сделить?
   return gulp.src('app/scss/**/*.scss').
-      // сообщать в терминале об ошибках
       pipe(scss({outputStyle: 'expand'}).on('error', notify.onError())).
-      // переименовывание файла
       pipe(rename({suffix: '.min', prefix: ''})).
-      // версия автопрефиксов
       pipe(autoprefixer(['last 15 versions'])).
-      // сортировка и объединения похожих стилей
       pipe(postCss([cssSort({order: 'smacss'})])).
-      // сжатие по условию
       pipe(gulpif(!devMode, cleanCSS())).
-      // куда положить файл
       pipe(gulp.dest('app/css')).
-      // перезагрузить страницу браузера
       pipe(browserSync.reload({stream: true}));
 });
 
-// метод сдележения за файлами
 gulp.task('watch', ['scss', 'js', 'browser-sync'], () => {
   gulp.watch([
     'app/scss/**/*.scss',
@@ -117,14 +109,12 @@ gulp.task('watch', ['scss', 'js', 'browser-sync'], () => {
   gulp.watch('app/*.html', browserSync.reload);
 });
 
-// сжатие изображений
 gulp.task('imagemin', () => {
   return gulp.src('app/img/**/*').
       pipe(imagemin()).
       pipe(gulp.dest('dist/img'));
 });
 
-// переименовывание htaccess
 gulp.task('rename-htaccess', () => {
   return gulp.src('app/htaccess.txt').
       pipe(
@@ -132,17 +122,15 @@ gulp.task('rename-htaccess', () => {
       pipe(gulp.dest('dist'));
 });
 
-// сборка проекта
 gulp.task('build', ['rename-htaccess', 'removedist', 'imagemin', 'scss', 'js'],
     () => {
-
       let buildFiles = gulp.src([
         'app/*.html',
-        'app/.htaccess',
+        'app/.htaccess'
       ]).pipe(gulp.dest('dist'));
 
       let buildCss = gulp.src([
-        'app/css/*.*',
+        'app/css/*.*'
       ]).pipe(gulp.dest('dist/css'));
 
       let buildJs = gulp.src([
@@ -150,37 +138,33 @@ gulp.task('build', ['rename-htaccess', 'removedist', 'imagemin', 'scss', 'js'],
       ]).pipe(gulp.dest('dist/js'));
 
       let buildFonts = gulp.src([
-        'app/fonts/**/*',
+        'app/fonts/**/*'
       ]).pipe(gulp.dest('dist/fonts'));
-
     });
 
-// удаление папки dist
 gulp.task('removedist', () => {
   return del.sync('dist');
 });
 
-// очистка кеша
 gulp.task('clearcache', () => {
   return cache.clearAll();
 });
 
-// отправка файлов по FTP
 gulp.task('deploy', () => {
   let conn = ftp.create({
-    host: '', // хост
-    user: '', // логин
-    password: '', // пароль
-    parallel: 10, // кол-во одновременных закачек
-    log: gutil.log // название файла логов
+    host: '',
+    user: '',
+    password: '',
+    parallel: 10,
+    log: gutil.log
   });
-  // массив файлов для закачки
+
   let globs = [
     'dist/**',
-    'dist/.htaccess',
+    'dist/.htaccess'
   ];
   return gulp.src(globs, {buffer: false}).
-      pipe(conn.dest('/www/')); // путь на сервере, куда загрудать файлы
+      pipe(conn.dest('/www/'));
 });
 
 gulp.task('default', ['watch']);

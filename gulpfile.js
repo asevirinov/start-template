@@ -14,7 +14,6 @@ const browserSync = require('browser-sync'),
     rename = require('gulp-rename'),
     scss = require('gulp-sass'),
     uglify = require('gulp-uglify'),
-    gutil = require('gulp-util'),
     ftp = require('vinyl-ftp');
 
 const devMode = true;
@@ -155,8 +154,7 @@ gulp.task('deploy', () => {
     host: '',
     user: '',
     password: '',
-    parallel: 10,
-    log: gutil.log
+    parallel: 10
   });
 
   let globs = [

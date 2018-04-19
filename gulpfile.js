@@ -1,7 +1,7 @@
 const ENV = {
   devMode: true,
-  slimJquery: false,
-  name: {},
+  slimJquery: true,
+  openBrowserAfterRun: true,
   bootstrap: [
     'app/libs/popper.js/dist/umd/popper.js',
     'app/libs/bootstrap/js/dist/util.js',
@@ -78,7 +78,7 @@ gulp.task('inputmask-js', () => {
 });
 
 gulp.task('js', ['app-js', 'bootstrap-js', 'inputmask-js'], () => {
-  let jQueryVersion = slimJquery
+  let jQueryVersion = ENV.slimJquery
       ? 'app/libs/jquery/dist/jquery.slim.js'
       : 'app/libs/jquery/dist/jquery.js';
   return gulp.src([
@@ -98,6 +98,7 @@ gulp.task('browser-sync', () => {
       baseDir: 'app',
     },
     notify: false,
+    open: ENV.openBrowserAfterRun
   });
 });
 

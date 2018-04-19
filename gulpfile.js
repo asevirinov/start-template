@@ -1,4 +1,5 @@
 const ENV = {
+  domain: 'https://domain.com',
   devMode: true,
   slimJquery: true,
   openBrowserAfterRun: true,
@@ -33,8 +34,8 @@ const ENV = {
     host: '',
     user: '',
     pass: '',
-    path: ''
-  }
+    path: '',
+  },
 };
 
 const browserSync = require('browser-sync'),
@@ -52,6 +53,7 @@ const browserSync = require('browser-sync'),
     postCss = require('gulp-postcss'),
     rename = require('gulp-rename'),
     scss = require('gulp-sass'),
+    sitemap = require('gulp-sitemap'),
     uglify = require('gulp-uglify'),
     ftp = require('vinyl-ftp');
 
@@ -98,7 +100,7 @@ gulp.task('browser-sync', () => {
       baseDir: 'app',
     },
     notify: false,
-    open: ENV.openBrowserAfterRun
+    open: ENV.openBrowserAfterRun,
   });
 });
 
@@ -128,6 +130,15 @@ gulp.task('imagemin', () => {
       pipe(gulp.dest('dist/img'));
 });
 
+gulp.task('sitemap', () => {
+  gulp.src('app/*.html', {
+    read: false,
+    lastmod: Date.now(),
+  }).pipe(sitemap({
+    siteUrl: ENV.domain,
+  })).pipe(gulp.dest('dist'));
+});
+
 gulp.task('rename-htaccess', () => {
   return gulp.src('app/htaccess.txt').
       pipe(
@@ -135,7 +146,8 @@ gulp.task('rename-htaccess', () => {
       pipe(gulp.dest('dist'));
 });
 
-gulp.task('build', ['rename-htaccess', 'removedist', 'imagemin', 'scss', 'js'],
+gulp.task('build',
+    ['rename-htaccess', 'removedist', 'imagemin', 'scss', 'js', 'sitemap'],
     () => {
       let buildFiles = gulp.src([
         'app/*.html',

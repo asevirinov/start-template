@@ -1,8 +1,13 @@
 <?php
 
 $project_name = 'Site name';
-$emails = ['example@gmail.com'];
-$subject = 'Заполнена форма на сайте';
+$fromEmail = 'noreply@domain.com';
+$emails = ['example@domain.com'];
+$subject = 'Mail subject';
+
+$domain = 'https://domain.com';
+$logoUrl = 'https://domain.com/img/logo.png';
+$logoWidth = '100'; // px
 
 header('Content-Type: application/json');
 
@@ -18,8 +23,8 @@ if ($method === 'POST') {
         $body .= '<br><br>';
         $body .= '<table width="600" align="center" cellspacing="1" cellpadding="20" bgcolor="#E0E0E0"><tbody><tr>';
         $body .= '<td bgcolor="#E0E0E0" height="75" align="center">';
-        $body .= '<a href="https://beeline3v1.ru/" target="_blank">';
-        $body .= '<img src="https://beeline3v1.ru/img/logo.png" width="181" alt="logo" border="0">';
+        $body .= '<a href="' . $domain . '" target="_blank">';
+        $body .= '<img src="' . $logoUrl . '" width="' . $logoWidth . '" alt="logo" border="0">';
         $body .= '</a>';
         $body .= '</td>';
         $body .= '</tr>';
@@ -45,7 +50,7 @@ if ($method === 'POST') {
         foreach ($emails as $email) {
             $headers = "MIME-Version: 1.0" . PHP_EOL .
                 "Content-Type: text/html; charset=utf-8" . PHP_EOL .
-                'From: ' . adopt($project_name) . ' <noreply@dumpcode.ru>' . PHP_EOL .
+                'From: ' . adopt($project_name) . ' <' . $fromEmail . '>' . PHP_EOL .
                 'Reply-To: ' . $email . '' . PHP_EOL;
             mail($email, adopt($subject), $body, $headers);
         }

@@ -1,9 +1,16 @@
 const ENV = {
-  domain: 'https://domain.com',
-  devMode: true,
-  slimJquery: true,
-  openBrowserAfterRun: true,
-  bootstrap: [
+  ssl: true, // Use the HTTPS or HTTP protocol
+  domain: 'domain.com',
+  usePhp: false, // If true, you need to start the local server to process php files
+  devMode: true, // If true, all JS and CSS files are compressed
+  slimJquery: false, // Use the full or light version of jQuery plugin
+  browserSync: {
+    notify: false, // The small pop-over notifications in the browser are not always needed/wanted.
+    open: true, // Can be true, local, external, ui, ui-external, tunnel or false
+    tunnel: false, // Tunnel the Browsersync server through a random Public URL
+    tunnelName: 'projectname', // Attempt to use the URL "http://projectname.localtunnel.me"
+  },
+  bootstrap: [ // Comment out unnecessary plugins
     'app/libs/popper.js/dist/umd/popper.js',
     'app/libs/bootstrap/js/dist/util.js',
     'app/libs/bootstrap/js/dist/alert.js',
@@ -17,7 +24,7 @@ const ENV = {
     'app/libs/bootstrap/js/dist/tooltip.js',
     'app/libs/bootstrap/js/dist/popover.js',
   ],
-  inputmask: [
+  inputmask: [ // Comment out unnecessary plugins
     'app/libs/inputmask/dist/inputmask/inputmask.js',
     'app/libs/inputmask/dist/inputmask/inputmask.extensions.js',
     'app/libs/inputmask/dist/inputmask/inputmask.numeric.extensions.js',
@@ -30,12 +37,6 @@ const ENV = {
     'app/libs/inputmask/dist/inputmask/phone-codes/phone-uk.js',
     'app/libs/inputmask/dist/inputmask/phone-codes/phone-ru.js',
   ],
-  ftp: {
-    host: '',
-    user: '',
-    pass: '',
-    path: '',
-  },
 };
 
 const browserSync = require('browser-sync'),
@@ -54,8 +55,7 @@ const browserSync = require('browser-sync'),
     rename = require('gulp-rename'),
     scss = require('gulp-sass'),
     sitemap = require('gulp-sitemap'),
-    uglify = require('gulp-uglify'),
-    ftp = require('vinyl-ftp');
+    uglify = require('gulp-uglify');
 
 gulp.task('app-js', () => {
   return gulp.src(['app/js/app.js']).
@@ -95,13 +95,34 @@ gulp.task('js', ['app-js', 'bootstrap-js', 'inputmask-js'], () => {
 });
 
 gulp.task('browser-sync', () => {
-  browserSync({
-    server: {
-      baseDir: 'app',
-    },
-    notify: false,
-    open: ENV.openBrowserAfterRun,
-  });
+  if (ENV.usePhp) {
+    browserSync({
+      proxy: ENV.domain,
+      notify: ENV.browserSync.notify,
+    });
+  } else {
+    if (ENV.browserSync.tunnel) {
+      browserSync({
+        server: {
+          baseDir: 'app',
+        },
+        notify: ENV.browserSync.notify,
+        open: ENV.browserSync.open,
+        online: true,
+        tunnel: ENV.browserSync.tunnel,
+        tunnel: ENV.browserSync.tunnelName,
+      });
+    } else {
+      browserSync({
+        server: {
+          baseDir: 'app',
+        },
+        notify: ENV.browserSync.notify,
+        open: ENV.browserSync.open,
+        online: false,
+      });
+    }
+  }
 });
 
 gulp.task('scss', () => {
@@ -121,7 +142,8 @@ gulp.task('watch', ['scss', 'js', 'browser-sync'], () => {
     'app/libs/bootstrap/scss/**/*.scss',
   ], ['scss']);
   gulp.watch(['libs/**/*.js', 'app/js/app.js'], ['js']);
-  gulp.watch('app/*.html', browserSync.reload);
+  gulp.watch('app/**/*.html', browserSync.reload);
+  gulp.watch('app/**/*.php', browserSync.reload);
 });
 
 gulp.task('imagemin', () => {
@@ -131,11 +153,11 @@ gulp.task('imagemin', () => {
 });
 
 gulp.task('sitemap', () => {
-  gulp.src('app/*.html', {
+  gulp.src(['app/**/*.html', 'app/**/*.php'], {
     read: false,
     lastmod: Date.now(),
   }).pipe(sitemap({
-    siteUrl: ENV.domain,
+    siteUrl: (ENV.ssl ? 'https://' : 'http://') + ENV.domain,
   })).pipe(gulp.dest('dist'));
 });
 
@@ -150,17 +172,17 @@ gulp.task('build',
     ['rename-htaccess', 'removedist', 'imagemin', 'scss', 'js', 'sitemap'],
     () => {
       let buildFiles = gulp.src([
-        'app/*.html',
+        'app/**/*.html',
+        'app/**/*.php',
         'app/.htaccess',
-        'app/mail.php',
       ]).pipe(gulp.dest('dist'));
 
       let buildCss = gulp.src([
-        'app/css/*.*',
+        'app/css/**/*.css',
       ]).pipe(gulp.dest('dist/css'));
 
       let buildJs = gulp.src([
-        'app/js/*.*',
+        'app/js/**/*.js',
       ]).pipe(gulp.dest('dist/js'));
 
       let buildFonts = gulp.src([
@@ -174,22 +196,6 @@ gulp.task('removedist', () => {
 
 gulp.task('clearcache', () => {
   return cache.clearAll();
-});
-
-gulp.task('deploy', () => {
-  let conn = ftp.create({
-    host: ENV.ftp.host,
-    user: ENV.ftp.user,
-    password: ENV.ftp.pass,
-    parallel: 10,
-  });
-
-  let globs = [
-    'dist/**',
-    'dist/.htaccess',
-  ];
-  return gulp.src(globs, {buffer: false}).
-      pipe(conn.dest(ENV.ftp.path));
 });
 
 gulp.task('default', ['watch']);

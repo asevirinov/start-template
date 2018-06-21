@@ -16,15 +16,10 @@
     <link rel="shortcut icon" href="img/favicon/favicon.ico">
     <meta name="msapplication-config" content="img/favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
-    <style>
-        body {
-            opacity: 0;
-        }
-    </style>
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.min.css">
 </head>
 <body>
-
-
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -128,9 +123,7 @@
                     <!-- range -->
                     <div class="col-md-12 form-group">
                         <label for="range">Range</label>
-                        <input type="range" id="range" name="range" class="form-control" required>
-                        <div class="valid-feedback">Looks good!</div>
-                        <div class="invalid-feedback">Please set a range.</div>
+                        <input type="range" id="range" name="range" class="custom-range">
                     </div>
                 </div>
                 <!-- submit button -->
@@ -139,8 +132,6 @@
         </div>
     </div>
 </div>
-<!-- CSS -->
-<link rel="stylesheet" href="css/style.min.css">
 <!-- JS -->
 <script src="js/vendor.min.js"></script>
 <script src="js/app.min.js"></script>

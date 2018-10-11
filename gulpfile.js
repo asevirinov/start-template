@@ -1,5 +1,5 @@
 const ENV = {
-  ssl: true, // Use the HTTPS or HTTP protocol
+  ssl: false, // Use the HTTPS or HTTP protocol
   domain: 'domain.com',
   usePhp: false, // If true, you need to start the local server to process php files
   devMode: true, // If true, all JS and CSS files are compressed
@@ -60,7 +60,7 @@ const browserSync = require('browser-sync'),
 gulp.task('app-js', () => {
   return gulp.src(['app/js/app.js']).
       pipe(babel({
-        presets: ['env'],
+        presets: ['@babel/env'],
       })).
       pipe(concat('app.min.js')).
       pipe(gulpif(!ENV.devMode, uglify())).

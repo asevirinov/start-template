@@ -1,0 +1,16 @@
+<% var data = {
+    title: "Заголовок | Проект",
+    copyright: "Alexander Sevirinov"
+}; %>
+<%= _.template(require('./../includes/header.html'))(data) %>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">First page</h1>
+        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aliquam architecto assumenda
+            blanditiis consectetur dicta distinctio hic inventore perferendis voluptas! Animi beatae enim eos et
+            exercitationem iusto quia velit voluptates!</p>
+    </div>
+</div>
+
+<%= _.template(require('./../includes/footer.html'))(data) %>

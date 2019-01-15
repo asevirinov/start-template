@@ -1,0 +1,254 @@
+<% var data = {
+title: "Form page | Project name",
+copyright: "Alexander Sevirinov"
+}; %>
+<%= _.template(require('./../includes/header.html'))(data) %>
+
+
+<div class="container mt-3 mt-lg-5">
+    <div class="row">
+        <div class="col-12 col-lg-8 mx-lg-auto">
+            <form class="needs-validation" novalidate>
+                <!-- First row -->
+                <div class="form-row">
+                    <!-- Text field -->
+                    <div class="col-md-4 mb-3">
+                        <label for="fieldText">Text</label>
+                        <input type="text"
+                               name="text"
+                               class="form-control"
+                               id="fieldText"
+                               placeholder="Text field"
+                               pattern="[A-Za-z]{3, 190}"
+                               maxlength="190"
+                               aria-describedby="fieldTextHelpBlock"
+                               required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter a valid text.
+                        </div>
+                        <small id="fieldTextHelpBlock" class="form-text text-muted">
+                            Lorem ipsum dolor sit amet.
+                        </small>
+                    </div>
+                    <!-- E-mail field -->
+                    <div class="col-md-4 mb-3">
+                        <label for="fieldEmail">E-mail</label>
+                        <input type="email"
+                               name="email"
+                               class="form-control"
+                               id="fieldEmail"
+                               placeholder="E-mail field"
+                               pattern="(?!test@test\.com$)[a-z0-9._%+-]{3,}@[a-z]{3,}\.[a-z]{2,}(?:\.[a-z]{2,})?"
+                               maxlength="190"
+                               required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter a valid e-mail.
+                        </div>
+                    </div>
+                    <!-- Number field -->
+                    <div class="col-md-4 mb-3">
+                        <label for="fieldNumber">Number</label>
+                        <input type="number"
+                               name="number"
+                               class="form-control"
+                               id="fieldNumber"
+                               placeholder="Number field"
+                               step="1"
+                               min="0"
+                               max="999"
+                               maxlength="190"
+                               required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter a valid number.
+                        </div>
+                    </div>
+                </div>
+                <!-- Second row -->
+                <div class="form-row">
+                    <!-- Select field -->
+                    <div class="col-md-4 mb-3">
+                        <label for="fieldSelect">Select</label>
+                        <select class="custom-select"
+                                name="select"
+                                id="fieldSelect"
+                                required>
+                            <option value="" selected disabled>Select field</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Choose one option
+                        </div>
+                    </div>
+                    <!-- Range field -->
+                    <div class="col-md-4 mb-3">
+                        <label for="fieldRange" class="mb-3">Range</label>
+                        <input type="range"
+                               name="range"
+                               class="custom-range"
+                               id="fieldRange"
+                               step="1" min="1" max="100">
+                    </div>
+                    <!-- File field -->
+                    <div class="col-md-4 mb-3">
+                        <label>File</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="filedFile" required>
+                            <label class="custom-file-label" for="filedFile">File field</label>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Select local file
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Third row -->
+                <div class="form-row">
+                    <!-- Phone field -->
+                    <div class="col-md-4 mb-3">
+                        <label for="fieldPhone">Phone</label>
+                        <input type="tel"
+                               name="phone"
+                               class="form-control"
+                               id="fieldPhone"
+                               placeholder="Phone field"
+                               maxlength="190"
+                               required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter a valid phone number.
+                        </div>
+                    </div>
+                    <!-- Inline radio fields -->
+                    <div class="col-md-4 mb-3">
+                        <label class="d-block mb-3">Inline Radio</label>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="fieldRadioInline1" name="inline-radio" class="custom-control-input"
+                                   required>
+                            <label class="custom-control-label" for="fieldRadioInline1">Radio 1</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="fieldRadioInline2" name="inline-radio" class="custom-control-input"
+                                   required>
+                            <label class="custom-control-label" for="fieldRadioInline2">Radio 2</label>
+                        </div>
+                    </div>
+                    <!-- Radio fields -->
+                    <div class="col-md-4 mb-3">
+                        <label class="d-block mb-1">Radio</label>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="fieldRadio1" name="radio" class="custom-control-input" required>
+                            <label class="custom-control-label" for="fieldRadio1">Radio 1</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="fieldRadio2" name="radio" class="custom-control-input" required>
+                            <label class="custom-control-label" for="fieldRadio2">Radio 2</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fourth row -->
+                <div class="form-row">
+                    <!-- Checkbox field -->
+                    <div class="col-md-4 mb-3">
+                        <label class="mb-1">Checkbox</label>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" name="checkbox1" class="custom-control-input" id="fieldCheckbox1"
+                                   required>
+                            <label class="custom-control-label" for="fieldCheckbox1">Checkbox 1</label>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please activate the checkbox
+                            </div>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" name="checkbox2" class="custom-control-input" id="fieldCheckbox2"
+                                   required>
+                            <label class="custom-control-label" for="fieldCheckbox2">Checkbox 2</label>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please activate the checkbox
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Switch field -->
+                    <div class="col-md-4 mb-3">
+                        <label class="mb-1">Switch</label>
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" name="switch1" class="custom-control-input" id="fieldSwitch1"
+                                   required>
+                            <label class="custom-control-label" for="fieldSwitch1">Switch 1</label>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please activate the checkbox
+                            </div>
+                        </div>
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" name="switch2" class="custom-control-input" id="fieldSwitch2"
+                                   required>
+                            <label class="custom-control-label" for="fieldSwitch2">Switch 2</label>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please activate the checkbox
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Textarea field -->
+                    <div class="col-md-4 mb-3">
+                        <label for="fieldTextarea">Textarea</label>
+                        <textarea class="form-control" id="fieldTextarea" rows="2" required></textarea>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter any text
+                        </div>
+                    </div>
+                </div>
+                <!-- Fifth row -->
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox"
+                               name="agree"
+                               class="custom-control-input"
+                               id="agreeCheck"
+                               required
+                               checked>
+                        <label class="custom-control-label"
+                               for="agreeCheck">Agree to terms and conditions</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Submit form</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<%= _.template(require('./../includes/footer.html'))(data) %>

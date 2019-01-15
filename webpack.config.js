@@ -5,6 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const Autoprefixer = require('autoprefixer');
 
 function generateHtmlPlugins(templateDir) {
   const templateFiles = fs.readdirSync(path.resolve(__dirname, templateDir));
@@ -70,6 +71,9 @@ const config = {
                     },
                   ],
                 }),
+                Autoprefixer({
+                  browsers: ['ie >= 9', 'last 4 version'],
+                }),
               ],
             },
           },
@@ -85,7 +89,7 @@ const config = {
         test: /\.html$/,
         include: path.resolve(__dirname, 'src/html/includes'),
         use: ['raw-loader'],
-      }
+      },
     ],
   },
   plugins: [

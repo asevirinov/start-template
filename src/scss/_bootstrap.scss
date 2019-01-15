@@ -1,14 +1,6 @@
-/*!
- * Bootstrap v4.1.3 (https://getbootstrap.com/)
- * Copyright 2011-2018 The Bootstrap Authors
- * Copyright 2011-2018 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- *
- * Here you can disable unnecessary style sheets.
+/**
+* Comment out unused modules
  */
-
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/root";
 @import "~bootstrap/scss/reboot";
@@ -36,9 +28,11 @@
 @import "~bootstrap/scss/media";
 @import "~bootstrap/scss/list-group";
 @import "~bootstrap/scss/close";
+@import "~bootstrap/scss/toasts";
 @import "~bootstrap/scss/modal";
 @import "~bootstrap/scss/tooltip";
 @import "~bootstrap/scss/popover";
 @import "~bootstrap/scss/carousel";
+@import "~bootstrap/scss/spinners";
 @import "~bootstrap/scss/utilities";
 @import "~bootstrap/scss/print";

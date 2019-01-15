@@ -4,12 +4,21 @@
 }; %>
 <%= _.template(require('./../includes/header.html'))(data) %>
 
-<div class="jumbotron jumbotron-fluid">
+<div class="jumbotron jumbotron-fluid" style="margin-bottom: 1000px;">
     <div class="container">
         <h1 class="display-4">Second page</h1>
         <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquid dolor eius in minima
             necessitatibus quaerat quas quasi quo quos! Culpa ea ex expedita illo magnam maiores quisquam, reiciendis
-            totam!</p>
+            totam! <a href="#bottom">go to bottom</a></p>
+    </div>
+</div>
+
+<div class="container" id="bottom">
+    <div class="row">
+        <div class="col-12">
+            <h2 style="margin-bottom: 200px;">Heading-bottom</h2>
+            <p style="margin-bottom: 100px;"><a href="#top">go to top</a></p>
+        </div>
     </div>
 </div>
 

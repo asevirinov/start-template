@@ -2,6 +2,8 @@ import $ from "jquery";
 import "popper.js";
 import "bootstrap";
 
-$(function() {
+$(()=> {
+  'use strict';
+
   console.log('jQuery ready!');
 });

@@ -24,7 +24,7 @@ function generateHtmlPlugins(templateDir) {
 const htmlPlugins = generateHtmlPlugins('./src/html/views');
 
 const config = {
-  entry: ['./src/js/app.js', './src/scss/style.scss'],
+  entry: ['./src/js/app.js', './src/scss/app.scss'],
   output: {
     filename: './js/app.min.js',
   },
@@ -94,7 +94,7 @@ const config = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: './css/style.min.css',
+      filename: './css/app.min.css',
     }),
     new CopyWebpackPlugin([
       {

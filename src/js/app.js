@@ -5,8 +5,6 @@ import Inputmask from 'inputmask';
 import CustomFileInput from 'bs-custom-file-input';
 
 $(() => {
-  'use strict';
-
   // Smooth scroll
   $('a[href*="#"]').
       not('[href="#"]').

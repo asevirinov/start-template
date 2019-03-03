@@ -1,6 +1,6 @@
 {
   "name": "start-template",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "start html template",
   "main": "index.js",
   "repository": "git@github.com:asevirinov/start-template.git",

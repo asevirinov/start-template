@@ -1,32 +1,31 @@
-const path = require('path');
-const fs = require('fs');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const Autoprefixer = require('autoprefixer');
+const path = require('path')
+const fs = require('fs')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 
-function generateHtmlPlugins(templateDir) {
-  const templateFiles = fs.readdirSync(path.resolve(__dirname, templateDir));
+function generateHtmlPlugins (templateDir) {
+  const templateFiles = fs.readdirSync(path.resolve(__dirname, templateDir))
   return templateFiles.map(item => {
-    const parts = item.split('.');
-    const name = parts[0];
-    const extension = parts[1];
+    const parts = item.split('.')
+    const name = parts[0]
+    const extension = parts[1]
     return new HtmlWebpackPlugin({
       filename: `${name}.html`,
       template: path.resolve(__dirname, `${templateDir}/${name}.${extension}`),
-      inject: false,
-    });
-  });
+      inject: false
+    })
+  })
 }
 
-const htmlPlugins = generateHtmlPlugins('./src/html/views');
+const htmlPlugins = generateHtmlPlugins('./src/html/views')
 
 const config = {
   entry: ['./src/js/app.js', './src/scss/app.scss'],
   output: {
-    filename: './js/app.min.js',
+    filename: './js/app.min.js'
   },
   devtool: 'source-map',
   mode: 'production',
@@ -34,9 +33,9 @@ const config = {
     minimizer: [
       new TerserPlugin({
         sourceMap: true,
-        extractComments: true,
-      }),
-    ],
+        extractComments: true
+      })
+    ]
   },
   module: {
     rules: [
@@ -46,14 +45,14 @@ const config = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            options: {},
+            options: {}
           },
           {
             loader: 'css-loader',
             options: {
               sourceMap: true,
-              url: false,
-            },
+              url: false
+            }
           },
           {
             loader: 'postcss-loader',
@@ -66,52 +65,53 @@ const config = {
                     'default',
                     {
                       discardComments: {
-                        removeAll: true,
-                      },
-                    },
-                  ],
-                }),
-                Autoprefixer({
-                  browsers: ['ie >= 9', 'last 4 version'],
-                }),
-              ],
-            },
+                        removeAll: true
+                      }
+                    }
+                  ]
+                })
+              ]
+            }
           },
           {
             loader: 'sass-loader',
             options: {
-              sourceMap: true,
-            },
-          },
-        ],
+              sourceMap: true
+            }
+          }
+        ]
       },
       {
         test: /\.html$/,
         include: path.resolve(__dirname, 'src/html/includes'),
-        use: ['raw-loader'],
-      },
-    ],
+        use: ['raw-loader']
+      }
+    ]
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: './css/app.min.css',
+      filename: './css/app.min.css'
     }),
     new CopyWebpackPlugin([
       {
         from: './src/fonts',
-        to: './fonts',
+        to: './fonts'
+      },
+      {
+        from: './src/favicon',
+        to: './favicon'
       },
       {
         from: './src/img',
-        to: './img',
-      },
-    ]),
-  ].concat(htmlPlugins),
-};
+        to: './img'
+      }
+    ])
+  ].concat(htmlPlugins)
+}
 
 module.exports = (env, argv) => {
   if (argv.mode === 'production') {
-    config.plugins.push(new CleanWebpackPlugin('dist'));
+    config.plugins.push(new CleanWebpackPlugin())
   }
-  return config;
-};
+  return config
+}

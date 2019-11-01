@@ -8,10 +8,10 @@
 `git clone git@github.com:asevirinov/start-template.git new-project && cd new-project`
 
 ### Установи модули
-`yarn install`
+`npm install`
 
 ### Запуск с отслеживанием изменений
-`yarn run start`
+`npm run start`
 
 ### Сборка в папку `dist`
-`yarn run build`
+`npm run build`
